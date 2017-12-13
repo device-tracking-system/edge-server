@@ -12,17 +12,20 @@ import pl.edu.agh.iet.dts.edge.messaging.format.GPSEvent;
 public class GPSEventsSender {
 
     private final RabbitTemplate rabbitTemplate;
-    private final String queueName;
+    private final String exchangeName;
+    private final String bindingName;
 
 
     public GPSEventsSender(final RabbitTemplate rabbitTemplate,
-                           @Value("${messaging.gpsEventsSender.queueName}") final String queueName) {
+                           @Value("${messaging.gpsEventsSender.exchangeName}") final String exchangeName,
+                           @Value("${messaging.gpsEventsSender.bindingName}") final String bindingName) {
         this.rabbitTemplate = rabbitTemplate;
-        this.queueName = queueName;
+        this.exchangeName = exchangeName;
+        this.bindingName = bindingName;
     }
 
     public void sendEvent(final GPSEvent event) {
-        rabbitTemplate.convertAndSend(queueName, event);
+        rabbitTemplate.convertAndSend(exchangeName, bindingName, event);
     }
 
 }

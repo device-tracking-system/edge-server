@@ -22,7 +22,7 @@ public class GPSEventWebSocketClient {
 
             @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-                session.send("/events", new GPSEvent("test", 1.0d, 2.0d));
+                session.send("/events", new GPSEvent("test", 1.0d, 2.0d, 123L));
             }
 
         };
