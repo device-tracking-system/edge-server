@@ -29,8 +29,8 @@ public class GPSEventSenderConfiguration {
     }
 
     @Bean
-    public Binding AggregationTaskTopicExchangeToQueueBinding(final Queue queue, final DirectExchange exchange,
-                                                              @Value("${messaging.gpsEventsSender.bindingName}") final String bindingName) {
+    public Binding AggregationTaskDirectExchangeToQueueBinding(final Queue queue, final DirectExchange exchange,
+                                                               @Value("${messaging.gpsEventsSender.bindingName}") final String bindingName) {
         return BindingBuilder
                 .bind(queue)
                 .to(exchange)
