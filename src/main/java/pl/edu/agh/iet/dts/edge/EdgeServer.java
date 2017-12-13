@@ -27,7 +27,7 @@ public class EdgeServer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/**")
                 .authorizeRequests()
-                    .antMatchers("/", "/app", "/app/components/login", "/app/components/unauthenticated", "/login**",
+                    .antMatchers("/", "/app", "/app/components/login", "/app/components/unauthenticated", "/login**", "/events**",
                                  "/index.html", "/templates/login.html", "/templates/unauthenticated.html",
                                  "/angularMain.js", "/router.js", "/controller/indexController.js", "/controller/loginController.js",
                                  "/webjars/**")
