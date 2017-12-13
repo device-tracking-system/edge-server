@@ -1,7 +1,9 @@
 package pl.edu.agh.iet.dts.edge.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+import pl.edu.agh.iet.dts.edge.messaging.GPSEventsSender;
 import pl.edu.agh.iet.dts.edge.messaging.format.GPSEvent;
 
 /**
@@ -10,9 +12,12 @@ import pl.edu.agh.iet.dts.edge.messaging.format.GPSEvent;
 @Controller
 public class GPSEventController {
 
+    @Autowired private GPSEventsSender eventsSender;
+
+
     @MessageMapping("/events")
-    public void collectGPSEvents(GPSEvent event) {
-        System.out.println("Event received: " + event);
+    public void collectGPSEvents(final GPSEvent event) {
+        eventsSender.sendEvent(event);
     }
 
 }
