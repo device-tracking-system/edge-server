@@ -14,7 +14,7 @@ import pl.edu.agh.iet.dts.edge.messaging.format.GPSEvent;
  */
 public class GPSEventWebSocketClient {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final WebSocketStompClient socketClient = new WebSocketStompClient(new StandardWebSocketClient());
         socketClient.setMessageConverter(new MappingJackson2MessageConverter());
 
@@ -28,6 +28,7 @@ public class GPSEventWebSocketClient {
         };
 
         socketClient.connect("ws://localhost/events", sessionHandler);
+        Thread.sleep(1000);
     }
 
 }
