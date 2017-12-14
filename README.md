@@ -28,3 +28,23 @@ mvn install
 ```
 java -jar target/edge-server-1.0-SNAPSHOT.jar --spring.config.location=classpath:pl/edu/agh/iet/dts/edge/
 ```
+
+## Building the Docker image
+When the `*.jar` file is successfully built, a Docker image for the production environment may be created by applying
+following steps:
+  1. Enter the root directory of this repository.
+  2. Build the Docker image by typing:
+```
+docker build . -t edge-server
+```
+  3. In order to run the image, type:
+```
+docker run -p 80:80 -e "GOOGLE_CLIENT_ID=[Google OAuth2 Client ID] GOOGLE_CLIENT_SECRET=[Google OAuth2 Client Secret] -t edge-server
+```
+
+## Testing
+In order to test the application locally, run the built `*.jar` file by typing:
+```
+java -jar target/edge-server-1.0-SNAPSHOT.jar --spring.profiles.active=test --spring.config.location=classpath:pl/edu/agh/iet/dts/edge/
+```
+and then execute specific tests.
