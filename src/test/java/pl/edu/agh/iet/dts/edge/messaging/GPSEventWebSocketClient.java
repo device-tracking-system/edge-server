@@ -11,7 +11,9 @@ import pl.edu.agh.iet.dts.edge.messaging.format.GPSEvent;
 
 import java.time.Instant;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 /**
  * @author Bartłomiej Grochal
@@ -51,10 +53,14 @@ public class GPSEventWebSocketClient {
                         new double[]{50.067619d, 19.913246d}};
                 final Random randomGenerator = ThreadLocalRandom.current();
 
+                int positions_sent = 0;
                 for (double[] coordinates : fakeEvents) {
                     final GPSEvent event =
                             new GPSEvent("test", coordinates[0], coordinates[1], Instant.now().getEpochSecond());
                     session.send("/events", event);
+
+                    Logger.getAnonymousLogger()
+                            .info(String.format("Positions sent: %d/%d", ++positions_sent, fakeEvents.length));
 
                     try {
                         Thread.sleep((10 + randomGenerator.nextInt(5) - 2) * 1000);
@@ -62,12 +68,14 @@ public class GPSEventWebSocketClient {
                         e.printStackTrace();
                     }
                 }
+
+                Logger.getAnonymousLogger().info("Uploading data finished. Press any key to exit.");
             }
 
         };
 
         socketClient.connect("ws://localhost/events", sessionHandler);
-        Thread.sleep(1000);
+        new Scanner(System.in).nextLine();
     }
 
 }
