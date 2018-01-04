@@ -39,8 +39,13 @@ docker build . -t edge-server
 ```
   3. In order to run the image, type:
 ```
-docker run -p 80:80 -e "GOOGLE_CLIENT_ID=[Google OAuth2 Client ID] GOOGLE_CLIENT_SECRET=[Google OAuth2 Client Secret] -t edge-server
+docker run -p 80:80 -p 44361:44321 -p 44363:44323 -e GOOGLE_CLIENT_ID=[Google OAuth2 Client ID] GOOGLE_CLIENT_SECRET=[Google OAuth2 Client Secret] -t edge-server
 ```
+Please note that this docker container uses the Performance Co-Pilot (PCP) tool to gather data for system monitoring
+metrics. These values are accessed via the `44361` and `44363` ports. In order to visualize performance of this
+microservice, please enter the `[CONTAINER IP ADDRESS]:44363` value in the `Hostname` field placed in the Netflix Vector
+dashboard.
+
 
 ## Testing
 In order to test the application locally, run the built `*.jar` file by typing:
