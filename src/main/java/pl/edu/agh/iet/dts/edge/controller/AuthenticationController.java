@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.dts.edge.controller;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,9 @@ public class AuthenticationController {
 
         userDetails.put("id", authenticationDetails.get("sub"));
         userDetails.put("name", authenticationDetails.get("name"));
+
+        LoggerFactory.getLogger(AuthenticationController.class)
+                .debug(String.format("[GET /me] %s", userDetails));
         return userDetails;
     }
 

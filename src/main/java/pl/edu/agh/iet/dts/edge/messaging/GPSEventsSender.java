@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.dts.edge.messaging;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class GPSEventsSender {
 
     public void sendEvent(final GPSEvent event) {
         rabbitTemplate.convertAndSend(exchangeName, bindingName, event);
+
+        LoggerFactory.getLogger(GPSEventsSender.class)
+                .debug(String.format("[MSG %s/%s] %s", exchangeName, bindingName, event));
     }
 
 }
