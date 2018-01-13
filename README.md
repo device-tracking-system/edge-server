@@ -9,6 +9,7 @@ The Edge Server is a common entry point for all clients to use the Devices Track
 You need to have the following tools installed and configured:
   - Java SE 1.8+
   - Maven 3.0+
+  - RabbitMQ Server 3.0+
 
 ## Installation and Commissioning
 In order to run the edge server, follow these steps:
@@ -18,7 +19,8 @@ In order to run the edge server, follow these steps:
      site.
   2. Run the [Configuration Server](https://github.com/device-tracking-system/configuration-server).
   3. Run the [Service Discovery](https://github.com/device-tracking-system/service-discovery).
-  4. Run all the underlying services covered by this gateway service.
+  4. Run all the underlying services covered by this gateway service (including their dependencies such as MongoDB and
+  RabbitMQ).
   5. Clone the latest production version of this repository from the `master` branch.
   6. Navigate to the cloned repository and install all dependencies by typing:
 ```
@@ -39,7 +41,7 @@ docker build . -t edge-server
 ```
   3. In order to run the image, type:
 ```
-docker run -p 80:80 -p 44361:44321 -p 44363:44323 -e GOOGLE_CLIENT_ID=[Google OAuth2 Client ID] GOOGLE_CLIENT_SECRET=[Google OAuth2 Client Secret] -t edge-server
+docker run -p 80:80 -p 44361:44321 -p 44363:44323 -e GOOGLE_CLIENT_ID=[Google OAuth2 Client ID] -e GOOGLE_CLIENT_SECRET=[Google OAuth2 Client Secret] -e CONFIGURATION_SERVER_IP=[CONFIGURATION SERVER HOST IP ADDRESS] -e EUREKA_IP=[EUREKA HOST IP ADDRESS] -e ZIPKIN_IP=[ZIPKIN HOST IP ADDRESS] -e RABBITMQ_IP=[RABBITMQ HOST IP ADDRESS] -t edge-server
 ```
 Please note that this docker container uses the Performance Co-Pilot (PCP) tool to gather data for system monitoring
 metrics. These values are accessed via the `44361` and `44363` ports. In order to visualize performance of this
@@ -56,5 +58,5 @@ and then execute specific tests.
 
 ## Debugging
 In order to turn on debug logs for classes located in the `pl.edu.agh.iet.dts.*` package within this repository, please 
-activate the `test`  profile by setting the `--spring.profiles.active=[OTHER PROFILES],test` flag and adding the 
+activate the `debug`  profile by setting the `--spring.profiles.active=[OTHER PROFILES],debug` flag and adding the 
 `--debug` flag.
