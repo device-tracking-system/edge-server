@@ -56,6 +56,11 @@ java -jar target/edge-server-1.0-SNAPSHOT.jar --spring.profiles.active=test --sp
 ```
 and then execute specific tests.
 
+### Mocking WebSocket data
+In order to send fake positions data to the WebSocket, use the `pl.edu.agh.iet.dts.edge.messaging.GPSEventWebSocketClient`
+class placed under the `src/test/java` directory. At its startup, this class takes two parameters: address of the target 
+WebSocket (given by: `ws://[EDGE SERVER HOST IP ADDRESS]/events`) and ID of a client whose data are being pushed.
+
 ## Debugging
 In order to turn on debug logs for classes located in the `pl.edu.agh.iet.dts.*` package within this repository, please 
 activate the `debug`  profile by setting the `--spring.profiles.active=[OTHER PROFILES],debug` flag and adding the 

@@ -56,7 +56,7 @@ public class GPSEventWebSocketClient {
                 int positions_sent = 0;
                 for (double[] coordinates : fakeEvents) {
                     final GPSEvent event =
-                            new GPSEvent("test", coordinates[0], coordinates[1], Instant.now().getEpochSecond());
+                            new GPSEvent(args[1], coordinates[0], coordinates[1], Instant.now().getEpochSecond());
                     session.send("/events", event);
 
                     Logger.getAnonymousLogger()
@@ -74,7 +74,7 @@ public class GPSEventWebSocketClient {
 
         };
 
-        socketClient.connect("ws://localhost/events", sessionHandler);
+        socketClient.connect(args[0], sessionHandler);
         new Scanner(System.in).nextLine();
     }
 
